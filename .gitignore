@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 # Custom files
-.data/*
+.src/data/*
