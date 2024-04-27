@@ -1,11 +1,17 @@
-import { useState } from 'react'
+import Footer from "./components/Footer"
+import Header from "./components/Header"
+import Ingredients from "./components/Ingredients"
+import Plates from "./components/Plates"
 
 function App() {
   return (
     <>
-      <header><h1 class="text-3xl font-bold underline text-green-700">Header</h1></header>
-      <main>Main</main>
-      <footer>Footer</footer>
+      <Header></Header>
+      <main className="container mx-auto px-4">
+        <Ingredients></Ingredients>
+        <Plates></Plates>
+      </main>
+      <Footer></Footer>
     </>
   )
 }
