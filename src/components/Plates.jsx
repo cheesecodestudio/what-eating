@@ -1,7 +1,7 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd, faPen, faSquareCheck, faSquareXmark, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { generarId } from '../utils/utils.cjs'
+import { generarId, dateFormat } from '../utils/utils.cjs'
 
 const Plates = ({ platesData, setPlatesData, ingredientsData, CheckPlates }) => {
 	const [Id, setId] = useState('')
@@ -80,7 +80,7 @@ const Plates = ({ platesData, setPlatesData, ingredientsData, CheckPlates }) => 
 	return (
 		<>
 			<h1 className='text-2xl font-bold underline text-purple-700'>Plates</h1>
-			<form action="post" onSubmit={HandleSubmit}>
+			<form onSubmit={HandleSubmit}>
 				<table className='w-full text-lg text-left rtl:text-right text-gray-500'>
 					<thead className='text-2xl text-gray-700 uppercase bg-gray-50  text-center'>
 						<tr>
@@ -99,7 +99,7 @@ const Plates = ({ platesData, setPlatesData, ingredientsData, CheckPlates }) => 
 									{data.Name}
 								</th>
 								<th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-									{data.CreateDate}
+									{dateFormat(data.CreateDate)}
 								</th>
 								<th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 									{data.Type}

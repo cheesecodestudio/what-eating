@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 /**
  * returns a valid string parse to JSON
  * @param {string} string 
@@ -55,5 +57,9 @@ export function clearStorage(){
       const currentTime = new Date().getTime();
       localStorage.setItem('lastVisit', currentTime.toString()); // Guarda la hora de la visita actual
     }
+}
+
+export function dateFormat(date) {
+    return format(date, "MMM do, yyyy");
 }
 //#endregion General Methods
