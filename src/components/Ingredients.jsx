@@ -4,15 +4,15 @@ import { faAdd, faPen, faSquareCheck, faSquareXmark, faTrash } from '@fortawesom
 import { generarId } from '../utils/utils.cjs'
 
 
-const Ingredients = ({ ingredientsData, setIngredientsData }) => {
+const Ingredients = ({ ingredientsData, setIngredientsData, CheckPlates, RemoveIngredientFromPlates }) => {
+	const [Id, setId] = useState('')
 	const [Name, setName] = useState('')
 	const [CreateDate, setCreateDate] = useState('')
-	const [Id, setId] = useState('')
 	const [InStock, setInStock] = useState(false)
 
 	const isCreate = () => Id === '';
 
-	const AddIngredient = e => {
+	const HandleSubmit = e => {
 		e.preventDefault()
 		let ingredientExist = ingredientsData.findIndex(ingredient => ingredient.Id === Id);
 
@@ -24,13 +24,14 @@ const Ingredients = ({ ingredientsData, setIngredientsData }) => {
 		}
 		else {
 			let newIngredient = {
-				Id: generarId(),
+				Id: `I-${generarId()}`,
 				Name,
 				CreateDate,
 				InStock
 			};
-			setIngredientsData([newIngredient, ...ingredientsData])
+			setIngredientsData([newIngredient, ...ingredientsData]);
 		}
+		CheckPlates();
 
 		//clean inputs
 		setId('');
@@ -39,7 +40,7 @@ const Ingredients = ({ ingredientsData, setIngredientsData }) => {
 		setInStock(false);
 	}
 
-	const EditIngredient = (id) => {
+	const FillInputs = (id) => {
 		const ingredient = ingredientsData.find(ingredient => ingredient.Id === id);
 		setId(ingredient.Id);
 		setName(ingredient.Name);
@@ -51,15 +52,17 @@ const Ingredients = ({ ingredientsData, setIngredientsData }) => {
 		const ingredient = ingredientsData.find(ingredient => ingredient.Id === id);
 		const answer = confirm(`Would you like to remove "${ingredient.Name}" ingredient?`)
 		if (answer) {
-			const removeIngredint = ingredientsData.filter(i => i.Id !== ingredient.Id);
-			setIngredientsData(removeIngredint);
+			const removeIngredient = ingredientsData.filter(i => i.Id !== ingredient.Id);
+			setIngredientsData(removeIngredient);
+
+			RemoveIngredientFromPlates(ingredient.Id);
 		}
 	}
 
 	return (
 		<>
 			<h1 className='text-2xl font-bold underline text-purple-700'>Ingredients</h1>
-			<form action="" onSubmit={AddIngredient}>
+			<form action="post" onSubmit={HandleSubmit}>
 				<table className='w-full text-lg text-left rtl:text-right text-gray-500'>
 					<thead className='text-2xl text-gray-700 uppercase bg-gray-50 text-center'>
 						<tr>
@@ -71,7 +74,7 @@ const Ingredients = ({ ingredientsData, setIngredientsData }) => {
 					</thead>
 					<tbody>
 						{ingredientsData.map(data => (
-							<tr key={data.Id} className="bg-white border-b  text-center">
+							<tr key={data.Id} className="bg-white border-b text-center">
 								<td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 									{data.Name}
 								</td>
@@ -85,7 +88,7 @@ const Ingredients = ({ ingredientsData, setIngredientsData }) => {
 									}
 								</td>
 								<td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-									<button type="button" onClick={() => EditIngredient(data.Id)} className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2.5 me-2 mb-2 focus:outline-none">
+									<button type="button" onClick={() => FillInputs(data.Id)} className="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2.5 me-2 mb-2 focus:outline-none">
 										<FontAwesomeIcon icon={faPen} />
 									</button>
 									<button type="button" onClick={() => RemoveIngredient(data.Id)} className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2.5 me-2 mb-2 focus:outline-none">
