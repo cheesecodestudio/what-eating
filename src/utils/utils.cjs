@@ -2,6 +2,25 @@ import { format } from 'date-fns';
 
 /**
  * returns a valid string parse to JSON
+ * @returns 
+ */
+export const generarId = () => {
+    const fecha = Date.now().toString(25)
+    const random = Math.random().toString(25).substring(2)
+    return `${fecha}_${random}`
+}
+
+/**
+ * Do format to date > Jun 2nd, 2024
+ * @param {string} date 
+ * @returns 
+ */
+export function dateFormat(date) {
+    return format(date, "MMM do, yyyy");
+}
+
+/**
+ * returns a valid string parse to JSON
  * @param {string} string 
  * @param {boolean} isSheet 
  * @returns 
@@ -15,27 +34,6 @@ export function isJSON(string, isSheet = false) {
         return { status: 'error' };
     }
     return json;
-}
-
-/**
- * 
- * @param {*} value 
- * @param {*} array 
- * @returns 
- */
-export function isDuplicated(value, array) {
-    for (const filter of array) {
-        if (filter == value) {
-            return true;
-        }
-    }
-    return false;
-}
-
-export const generarId = () => {
-    const fecha = Date.now().toString(25)
-    const random = Math.random().toString(25).substring(2)
-    return `${fecha}_${random}`
 }
 
 export function clearStorage(){
@@ -58,8 +56,3 @@ export function clearStorage(){
       localStorage.setItem('lastVisit', currentTime.toString()); // Guarda la hora de la visita actual
     }
 }
-
-export function dateFormat(date) {
-    return format(date, "MMM do, yyyy");
-}
-//#endregion General Methods
